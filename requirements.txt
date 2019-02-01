@@ -1,0 +1,31 @@
+Django==2.0.8  # issue with error in adding event: TypeError: render() got an unexpected keyword argument 'renderer' with later versions - autocomplete issue
+
+environ
+psycopg2-binary
+docutils
+
+
+pendulum
+
+djangorestframework
+django-cors-headers
+
+django-countries-plus
+django-languages-plus
+django-filter
+django_nose
+django-instant-coverage
+django-treebeard
+django-post_office
+django-markupfield
+
+
+Markdown
+PyYAML
+ua-parser
+user-agents
+django-user-agents
+django-import-export
+
+git+git://github.com/jojax/django-js-error-hook.git
+git+git://github.com/pennersr/django-allauth   # need fix for is_safe_url() missing 1 required positional argument: 'allowed_hosts'
