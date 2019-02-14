@@ -94,9 +94,8 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework',
     'web',
-    'treebeard',
     'markupfield',
-
+    'material',
     'django_js_error_hook',
 
     'allauth',
@@ -250,7 +249,22 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
     ),
 
-    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+
+    ),
+
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+        'rest_framework_yaml.parsers.YAMLParser',
+    ),
+
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework_csv.renderers.CSVRenderer',
+        'rest_framework_yaml.renderers.YAMLRenderer',
+    ),
 
 }
 

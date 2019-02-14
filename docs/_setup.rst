@@ -135,7 +135,8 @@ To populate countries and languages run::
     python manage.py loaddata languages_data.json.gz
 
 
-Then to get culture codes:
+Then to get culture codes use url (superuser only):
 
+    /update_culture_codes/
 
 

@@ -4,6 +4,7 @@ from django.urls import path, include, re_path
 from django.conf.urls import url
 from django.contrib.auth import views
 from django.conf import settings
+from django.shortcuts import redirect
 
 from importlib import import_module
 
@@ -21,6 +22,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 
 
 from rest_framework import routers, serializers, viewsets
+from rest_framework.documentation import include_docs_urls
 
 #from registration.backends.simple.views import RegistrationView
 #from web.forms import CustomUserForm
@@ -34,15 +36,16 @@ admin.autodiscover()
 # from tastypie.api import Api
 
 from web.views import *
-# from web.api import *
+from web.api import *
 
 
 #from web.importexport import ImportEntries,upload_entries, event_starttimes_export, event_results_export, \
 
 
-# router = routers.DefaultRouter()
-# router.register(r'tests', TestSheetViewSet)
-#
+router = routers.DefaultRouter()
+router.register(r'enumtype', EnumTypeViewset)
+router.register(r'enum', EnumViewset)
+
 
 
 def can_organise(user):
@@ -53,11 +56,10 @@ def can_organise(user):
 
 
 urlpatterns = [
-    # path('api/v2/', include(router.urls)),
-    # path('api/v2/check/', last_update_check, name="last_update_check"),
-    # path('api/v2/publish_comp/', publish_comp, name="publish_comp"),
-    #path('api/v2/score/', quick_save_score, name="quick_save_score"),
+    path('api/v1/', include(router.urls)),
 
+    path('admin/doc/', include('django.contrib.admindocs.urls')),
+    path('apidocs/', include_docs_urls(title='Enum API')),
 
     path('login/', views.LoginView.as_view(), name='login'),
     path('logout/', views.LogoutView.as_view(), name='logout'),
@@ -74,10 +76,14 @@ urlpatterns = [
 
     path('admin/doc/',include('django.contrib.admindocs.urls')),
 
+    path('import/', ImportView.as_view(), name="import_items"),
+    path('import/confirm/', ImportView.as_view(), name="import_items_confirm"),
 
 
     # path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('admin/', admin.site.urls),
+
+    path('', Home.as_view(), name="home"),
 ]
 
 

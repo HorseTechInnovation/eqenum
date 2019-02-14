@@ -5,12 +5,13 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractUser
 
 from countries_plus.models import Country
-from languages_plus.models import Language
+from languages_plus.models import Language, CultureCode
 from languages_plus.utils import associate_countries_and_languages
 
 from markupfield.fields import MarkupField
 
-from treebeard.mp_tree import MP_Node
+#from treebeard.mp_tree import MP_Node
+#NOTE: can't use treebeard and have ref as primary key
 
 class CreatedUpdatedMixin(models.Model):
 
@@ -27,7 +28,7 @@ class CustomUser(AbstractUser):
     country = models.ForeignKey(Country, blank=True, null=True, on_delete=models.CASCADE)
     language = models.ForeignKey(Language, blank=True, null=True, on_delete=models.CASCADE)
 
-class EnumType(MP_Node, CreatedUpdatedMixin):
+class EnumType(CreatedUpdatedMixin):
 
     ENUMTYPE_STATUS_DEPRECATED = 0
     ENUMTYPE_STATUS_PROPOSED = 1
@@ -43,14 +44,24 @@ class EnumType(MP_Node, CreatedUpdatedMixin):
         (ENUMTYPE_STATUS_APPROVED, "Approved"),
 
     )
-
-    ref = models.CharField(max_length=20, unique=True)
+    #NOTE: you cannot have ref as the primary key without breaking treebeard
+    ref = models.CharField(max_length=20, primary_key=True)
+    parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=60, unique=True)
     status = models.PositiveSmallIntegerField(default=1, choices=ENUMTYPE_STATUS)
     notes = MarkupField(markup_type='markdown', blank=True, null=True)
 
+    node_order_by = ['name']
+
     def __str__(self):
         return self.ref
+
+    class Meta:
+        verbose_name = _("Enum Grouping")
+
+    def save(self, *args, **kwargs):
+
+        super().save(*args, **kwargs)
 
 class Enum(CreatedUpdatedMixin):
 
@@ -66,18 +77,20 @@ class Enum(CreatedUpdatedMixin):
         (ENUM_STATUS_APPROVED, "Approved"),
 
     )
-    ref = models.CharField(max_length=20, unique=True)
+    # NOTE: you cannot have ref as the primary key without breaking treebeard
+    ref = models.CharField(max_length=20, primary_key=True)
+    name = models.CharField(max_length=60)
     enumtype = models.ForeignKey(EnumType,on_delete=models.CASCADE)
+    status = models.PositiveSmallIntegerField(default=1, choices=ENUM_STATUS)
     ordering = models.CharField(max_length=10, default="0")
     notes = MarkupField(markup_type='markdown', blank=True, null=True)
-
 
 
     def __str__(self):
         return self.ref
 
     class Meta:
-
+        verbose_name = _("Enum Item")
         ordering = ['ordering','ref']
 
     @classmethod
@@ -105,8 +118,10 @@ class EnumDisplay(CreatedUpdatedMixin):
     '''
 
     enum = models.ForeignKey(Enum,  on_delete=models.CASCADE)
-    language = models.CharField(max_length=2)
-    culture = models.CharField(max_length=5)
+    # language MUST be provided and can be derived from culture
+    language = models.ForeignKey(Language,  on_delete=models.CASCADE)
+    # culture is optional - or should it be required with a default per language
+    culture = models.ForeignKey(CultureCode, blank=True, null=True,  on_delete=models.CASCADE)
     display = models.CharField(max_length=100)
     abbreviation = models.CharField(max_length=10, blank=True, null=True)
     symbol = models.CharField(max_length=10, blank=True, null=True)
@@ -114,3 +129,15 @@ class EnumDisplay(CreatedUpdatedMixin):
 
     def __str__(self):
         return self.display
+
+    class Meta:
+        verbose_name = _("Enum Output/Display")
+
+    def save(self, *args, **kwargs):
+
+        # language can be derived from culture
+        if self.culture and not self.language:
+            self.language = self.culture[0:1]
+
+
+        super().save(*args, **kwargs)

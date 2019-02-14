@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block extra_head %}
+    <style>
+        h1 {
+            font-size:1.5rem;
+        }
+        h2 {
+            font-size:1.4rem;
+        }
+        h3 {
+            font-size:1.3rem;
+        }
+            h4 {
+            font-size:1.2rem;
+        }
+            h5 {
+            font-size:1.1rem;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+
+    <h1>Data</h1>
+
+    <p><a href="/apidocs/" class="waves-effect waves-light btn">API Documentation</a></p>
+    <p><a href="/admin/web/enum/import/" class="waves-effect waves-light btn">Import Enum Items</a></p>
+
+
+    {% for typ in enumtypes %}
+        <h3>{{ typ.name }}<span class="right"><a href="/admin/web/enumtype/{{ typ.id }}/">  <i class="material-icons">edit</i></a></span></h3>
+        <div class="row">
+            <div class="col s6">
+                <h5>Export</h5>
+                <a href="{% url "enum-list" %}?enumtype__ref={{ typ.ref }}&format=json" class="waves-effect waves-light btn">Json</a>
+                <a href="{% url "enum-list" %}?enumtype__ref={{ typ.ref }}&format=csv" class="waves-effect waves-light btn">CSV</a>
+                <a href="{% url "enum-list" %}?enumtype__ref={{ typ.ref }}&format=yaml" class="waves-effect waves-light btn">Yaml</a>
+            </div>
+
+        </div>
+
+        <ul class="collection">
+            {% for item in typ.enum_set.all %}
+                <li class="collection-item">{{ item.ref }}, {{ item.name }}<span class="right"><a href="/admin/web/enum/{{ item.id }}/">  <i class="material-icons small">edit</i></a></span>
+                </li>
+
+            {% endfor %}
+
+        </ul>
+    {% endfor %}
+
+
+    <h1>Admin</h1>
+    <ul class="collection with-header">
+        <li class="collection-header"><h4>Manage Enum Data</h4></li>
+        <li class="collection-item"><div>Add new Enum Type<a href="/admin/web/enumtype/add/" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+
+    </ul>
+
+{% endblock %}

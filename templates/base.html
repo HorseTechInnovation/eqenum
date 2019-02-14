@@ -1,0 +1,171 @@
+{% load i18n %}
+
+{% load static %}
+
+
+
+
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+
+<html{% if request.LANGUAGE_CODE %} lang="{{ request.LANGUAGE_CODE }}"{% endif %} {% block manifest %}{% endblock %}>
+<!--<![endif]-->
+
+
+
+<head>
+    {#    {% analytical_head_top %}#}
+    {% if DEBUG %}
+        <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+    {% endif %}
+
+    <meta charset="utf-8">
+    <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge" /><![endif]-->
+
+    {% block viewport %}
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% endblock %}
+
+
+
+
+    <link rel="manifest" href="/assets/manifest.json">
+
+    <title>{% block title %}Eqenum{% endblock %}</title>
+
+
+    <!-- Compiled and minified CSS -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    {#    <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed" rel="stylesheet">#}
+
+>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+        <script
+                src="https://code.jquery.com/jquery-3.3.1.min.js"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
+
+        <link rel="stylesheet" href="{% static "css/jquery.fileupload.css" %}">
+        <link rel="stylesheet" href="{% static "css/styles.css" %}">
+        <link rel="stylesheet" href="{% static "css/print.css" %}" media="print">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {% block media %}
+    {% endblock media %}
+
+    {% block more_headers %}
+    {% endblock more_headers %}
+
+    {% block extra_head %}
+    {% endblock extra_head %}
+
+
+
+</head>
+<body>
+
+{#{% analytical_body_top %}#}
+
+{% block modals %}
+{% endblock %}
+
+
+
+
+{% block nav %}
+
+
+
+{% endblock %}
+
+
+
+{% block outer %}
+    <div id="wrapper" class="container">
+
+        {% block main %}
+
+            {% block content %}
+
+            {% endblock content %}
+
+        {% endblock main %}
+
+    </div>
+{% endblock outer %}
+
+
+{% block footer %}
+    <footer class="page-footer " style="background-color: #33053a;">
+        <div class="foot-wrap no-print" >
+            <div class="container">
+
+
+
+
+            <div class="footer-copyright">
+                <div class="container">
+                    <div class="row">
+                        <div class="col s12">
+                           Equine Enum Data
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+{% endblock footer %}
+</div>
+{#</div>#}
+
+{% block tail %}
+{% endblock %}
+
+
+
+
+
+
+
+{% block js %}
+
+{% endblock js %}
+
+<script>
+    $(document).ready(function() {
+          M.AutoInit();
+    });
+</script>
+
+
+
+{% block postinit %}
+
+{% endblock %}
+
+
+</body>
+</html>

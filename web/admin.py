@@ -9,8 +9,24 @@ from .models import *
 from import_export import resources
 from import_export.admin import ImportExportActionModelAdmin
 
-from treebeard.admin import TreeAdmin
-from treebeard.forms import movenodeform_factory
+
+
+
+class EnumTypeResource(resources.ModelResource):
+
+    class Meta:
+        model = EnumType
+        import_id_fields = ('ref',)
+        fields = ('ref','name')
+
+class EnumResource(resources.ModelResource):
+
+    class Meta:
+        model = Enum
+        import_id_fields = ('ref',)
+        fields = ('ref','name','emumtype_id','ordering')
+
+
 
 class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
@@ -88,9 +104,10 @@ class UserAdmin(BaseUserAdmin):
     ordering = ('email',)
     filter_horizontal = ()
 
-class EnumTypeAdmin(TreeAdmin):
-    fields = ('ref', 'name', 'status', 'notes', '_position', '_ref_node_id',)
-    form = movenodeform_factory(EnumType)
+class EnumTypeAdmin(ImportExportActionModelAdmin):
+    resource_class = EnumTypeResource
+    list_display = ('ref', 'parent', 'name','status','creator', 'created',)
+    list_filter = ( 'status','created','parent')
 
 
 class EnumDisplayInline(admin.TabularInline):
@@ -101,11 +118,11 @@ class EnumAdmin(ImportExportActionModelAdmin):
     class Meta:
         model = Enum
 
-    list_display = (
-    'ref', 'enumtype', 'creator', 'created',)
-    list_filter = ('enumtype', 'created')
+    list_display = ( 'ref', 'enumtype', 'ordering','creator', 'created',)
+    list_filter = ( 'status','created','enumtype')
     search_fields = ('ref', 'enumtype',)
     inlines = [EnumDisplayInline,]
+    resource_class = EnumResource
 
 
 admin.site.register(CustomUser, UserAdmin)
