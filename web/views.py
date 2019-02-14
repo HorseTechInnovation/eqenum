@@ -16,6 +16,8 @@ from import_export.formats.base_formats import DEFAULT_FORMATS
 from import_export.tmp_storages import TempFolderStorage
 from import_export.admin import ImportMixin
 from import_export.results import RowResult
+from import_export.instance_loaders import BaseInstanceLoader
+
 
 from .models import *
 
@@ -77,14 +79,31 @@ class DummyAdminSite:
         return {}
 
 
+class EnumItemInstanceLoader(BaseInstanceLoader):
+    """
+    Instance loader for Django model.
+
+    Lookup for model instance by ``import_id_fields``.
+    """
+
+    def get_queryset(self):
+        return self.resource._meta.model.objects.all()
+
+    def get_instance(self, row):
+        try:
+            return self.resource._meta.model.objects.get(ref=row['ref'], enumtype=self.resource.enumtype_id)
+        except self.resource._meta.model.DoesNotExist:
+            return None
+
 class EnumResourceNoEnumtype(resources.ModelResource):
 
     enumtype_id = None
 
     class Meta:
         model = Enum
-        import_id_fields = ('ref',)
-        fields = ('ref','name','emumtype','ordering')
+        import_id_fields = ('enumtype','ref',)  # need to include enumtype in the unique id, but as not including this in upload file, is not working.
+        fields = ('ref','name','emumtype_id','ordering')
+        instance_loader_class = EnumItemInstanceLoader
 
     def __init__(self, *args, **kwargs):
         self.enumtype_id = kwargs['enumtype_id']

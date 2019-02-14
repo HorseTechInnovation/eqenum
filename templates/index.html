@@ -38,6 +38,9 @@
                 <a href="{% url "enum-list" %}?enumtype__ref={{ typ.ref }}&format=csv" class="waves-effect waves-light btn">CSV</a>
                 <a href="{% url "enum-list" %}?enumtype__ref={{ typ.ref }}&format=yaml" class="waves-effect waves-light btn">Yaml</a>
             </div>
+            <div class="col s6">
+                <h5>Import</h5>
+                <a href="{% url "import_items" %}?enumtype_id={{ typ.ref }}" class="waves-effect waves-light btn">Import</a>
 
         </div>
 
