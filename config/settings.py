@@ -104,7 +104,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',
 
     # 'camera_imagefield',
-
+    'material',
     'import_export',
 
 
