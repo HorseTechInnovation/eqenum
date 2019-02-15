@@ -31,7 +31,7 @@ DEBUG = False
 
 
 
-ALLOWED_HOSTS = ['www.dressagecalculator.com','dressagecalculator.com', 'dc.iofh.io', 'skor.ie', 'www.skor.ie']
+ALLOWED_HOSTS = ['cds.equinetech.org',]
 
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`

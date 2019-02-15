@@ -1,6 +1,6 @@
 from .settings import *
 
-
+ALLOWED_HOSTS = ['*', ]
 
 #  OVerride settings
 
