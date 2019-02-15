@@ -1,0 +1,34 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+django = "==2.0.8"
+environ = "*"
+psycopg2-binary = "*"
+docutils = "*"
+coreapi = "*"
+pendulum = "*"
+djangorestframework = "*"
+django-cors-headers = "*"
+django-countries-plus = "*"
+django-languages-plus = "*"
+django-filter = "*"
+django-nose = "*"
+django-instant-coverage = "*"
+django-post-office = "*"
+django-markupfield = "*"
+django-import-export = "*"
+markdown = "*"
+pyyaml = "*"
+ua-parser = "*"
+user-agents = "*"
+django-user-agents = "*"
+djangorestframework-yaml = "*"
+djangorestframework-csv = "*"
+
+[requires]
+python_version = "3.6"
