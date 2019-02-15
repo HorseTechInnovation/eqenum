@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "96b6c4d96e03f958bd12157893daf0c1926cc8c2ad6893c0faafacb7423ba35c"
+            "sha256": "596cf29fd8cc95476d127a6f67100490e9906d3a2951107048a0ba374df0da3a"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -74,6 +74,10 @@
             "index": "pypi",
             "version": "==2.0.8"
         },
+        "django-allauth": {
+            "git": "git://github.com/pennersr/django-allauth",
+            "ref": "1271e670d2e515e585528475cce9d89a8c4acdc2"
+        },
         "django-cors-headers": {
             "hashes": [
                 "sha256:5545009c9b233ea7e70da7dbab7cb1c12afa01279895086f98ec243d7eab46fa",
@@ -113,6 +117,10 @@
             "index": "pypi",
             "version": "==1.1.0"
         },
+        "django-js-error-hook": {
+            "git": "git://github.com/jojax/django-js-error-hook.git",
+            "ref": "cea4a9184a78f875fdfc6d7fe4f2f49d86bf5519"
+        },
         "django-languages-plus": {
             "hashes": [
                 "sha256:0b2ea00cd4373eb3bf21f0ccec42273560331d59e4b8c16c6c6211dd45ece565",
@@ -128,6 +136,10 @@
             ],
             "index": "pypi",
             "version": "==1.5.1"
+        },
+        "django-material": {
+            "git": "git://github.com/viewflow/django-material.git",
+            "ref": "eec71bd2292ec7f12b8487afae21cc0b5a3f0114"
         },
         "django-nose": {
             "hashes": [
@@ -487,5 +499,22 @@
             "version": "==1.3.0"
         }
     },
-    "develop": {}
+    "develop": {
+        "django-nose": {
+            "hashes": [
+                "sha256:58934a06a6932696e54c9e8af3fab49bf67ca9e9c840ad668cb7f51219808a07",
+                "sha256:f515d903cfaeda52c7a9198e0c8ed51563e82802b62a4e5fbd056fd830095318"
+            ],
+            "index": "pypi",
+            "version": "==1.4.6"
+        },
+        "nose": {
+            "hashes": [
+                "sha256:9ff7c6cc443f8c51994b34a667bbcf45afd6d945be7477b52e97516fd17c53ac",
+                "sha256:dadcddc0aefbf99eea214e0f1232b94f2fa9bd98fa8353711dacb112bfcbbb2a",
+                "sha256:f1bffef9cbc82628f6e7d7b40d7e255aefaa1adb6a1b1d26c69a8b79e6208a98"
+            ],
+            "version": "==1.3.7"
+        }
+    }
 }
