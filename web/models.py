@@ -28,6 +28,13 @@ class CustomUser(AbstractUser):
     country = models.ForeignKey(Country, blank=True, null=True, on_delete=models.CASCADE)
     language = models.ForeignKey(Language, blank=True, null=True, on_delete=models.CASCADE)
 
+class Authority(models.Model):
+    ref = models.CharField(max_length=20, primary_key=True)
+    name = models.CharField(max_length=60, unique=True)
+    url = models.URLField(blank=True, null=True)
+    notes = MarkupField(markup_type='markdown', blank=True, null=True)
+
+
 class EnumType(CreatedUpdatedMixin):
 
     ENUMTYPE_STATUS_DEPRECATED = 0
@@ -77,10 +84,10 @@ class Enum(CreatedUpdatedMixin):
         (ENUM_STATUS_APPROVED, "Approved"),
 
     )
-    # NOTE: you cannot have ref as the primary key without breaking treebeard
-    ref = models.CharField(max_length=20, primary_key=True)
-    name = models.CharField(max_length=60)
     enumtype = models.ForeignKey(EnumType,on_delete=models.CASCADE)
+    authority = models.ForeignKey(Authority, on_delete=models.CASCADE)
+    ref = models.CharField(max_length=20)
+    name = models.CharField(max_length=60)
     status = models.PositiveSmallIntegerField(default=1, choices=ENUM_STATUS)
     ordering = models.CharField(max_length=10, default="0")
     notes = MarkupField(markup_type='markdown', blank=True, null=True)
@@ -89,7 +96,9 @@ class Enum(CreatedUpdatedMixin):
     def __str__(self):
         return self.ref
 
+
     class Meta:
+        unique_together = ('enumtype', 'authority', 'ref')
         verbose_name = _("Enum Item")
         ordering = ['ordering','ref']
 
