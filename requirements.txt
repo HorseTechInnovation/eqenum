@@ -22,7 +22,7 @@ django-markupfield
 django-import-export
 
 Markdown
-PyYAML
+pyyaml>=4.2b1
 ua-parser
 user-agents
 django-user-agents
