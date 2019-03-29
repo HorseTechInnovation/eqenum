@@ -3,6 +3,7 @@ from django.contrib.postgres.fields import JSONField
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractUser
+from django.core.mail import  EmailMessage,  mail_admins
 
 from countries_plus.models import Country
 from languages_plus.models import Language, CultureCode
@@ -27,6 +28,29 @@ class CustomUser(AbstractUser):
 
     country = models.ForeignKey(Country, blank=True, null=True, on_delete=models.CASCADE)
     language = models.ForeignKey(Language, blank=True, null=True, on_delete=models.CASCADE)
+
+
+class UserContact(models.Model):
+
+    user = models.ForeignKey(CustomUser,  on_delete=models.CASCADE)
+    contact_date = models.DateTimeField(auto_now_add=True)
+    method = models.CharField(max_length=40)
+    notes = models.TextField(blank=True, null=True)
+    data = models.TextField(blank=True, null=True)    # use for json data, convert to field when avaialble
+
+    def __str__(self):
+        return "%s" % self.user
+
+    def __str__(self):
+        return "%s" % self.user
+
+    @classmethod
+    def add(cls, user, method, notes=None, data=None):
+
+        obj = cls.objects.create(user=user, method=method, notes=notes, data=data)
+
+        mail_admins("User Contact %s - %s " % (obj.user, obj.method), obj.notes, fail_silently=True)
+
 
 class Authority(models.Model):
     ref = models.CharField(max_length=20, primary_key=True)

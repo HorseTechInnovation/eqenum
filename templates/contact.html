@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans "Contact Us" %}{% endblock %}
+
+{% block extra_head %}
+    <style>
+        .btn-block {
+            width: 100%;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class=" col s12">
+            <h1>Contact us</h1>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-content">
+
+            <form id="contact_form" method="post" action=".">
+                {% csrf_token %}
+
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">email</i>
+                        <input type="email" name="email" autofocus="" required="" id="id_email" value="{% if user.email %}{{ user.email }}{% endif %}">
+                        <label for="id_email"   class="">Email</label>
+                        <span class="error_message" ></span>
+
+                        <p>   {{ form.email.errors }}</p>
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        <textarea id="message" name="message" class="materialize-textarea" required></textarea>
+                        <label for="message">Your Message</label>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col s12">
+                        <button type="submit" class="btn btn-block">{% trans "Send Message" %}</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <script src="{% static "js/jquery.validate.js" %}"></script>
+    <script>
+
+        // DOCUMENTATION: https://jqueryvalidation.org/
+        $("form").validate({
+            rules: {
+                email: {
+                    required: true,
+                    email: true
+                },
+                message: {
+                    required: true,
+                }
+
+
+            },
+
+
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+
+                $(error).addClass('helper-text');
+                var placement = $(element).parent().find(".error_message");
+                if (placement) {
+                    $(placement).html(error);
+                } else {
+                    error.insertAfter(element);
+                }
+
+            },
+            errorClass: 'invalid',
+        });
+
+
+
+
+
+    </script>
+{% endblock %}

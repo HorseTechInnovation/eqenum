@@ -1,11 +1,13 @@
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect, Http404, JsonResponse, FileResponse
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.views.generic.base import TemplateView
-from django.views.generic.edit import FormView
 from django import forms
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.forms import ModelForm, Form
+from django.http import HttpResponse, HttpResponseRedirect, Http404, JsonResponse, FileResponse
+from django.shortcuts import render
+from django.urls import reverse, reverse_lazy
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic.base import TemplateView
+from django.views.generic.edit import FormView
 
 from languages_plus.utils import associate_countries_and_languages
 
@@ -206,3 +208,27 @@ class ImportView(FormView, ImportMixin):
 
         return self.import_action(self.request, enumtype_id=form.cleaned_data['enumtype'].pk)
 
+class ContactForm(Form):
+
+
+    email = forms.EmailField()
+    message = forms.CharField( widget=forms.Textarea(attrs={'cols': 80, 'rows': 20}) )
+
+
+class ContactView(FormView):
+    template_name = "contact.html"
+    form_class = ContactForm
+    success_url = reverse_lazy('contact_thanks')
+
+    def form_valid(self, form):
+
+        # create as user if required
+
+        email = form.cleaned_data['email']
+        user, _ = CustomUser.objects.get_or_create(email=email)
+
+
+        # add contact note
+        UserContact.add(user=user, method="Contact Form", notes = json.dumps(form.cleaned_data), data=json.dumps(form.cleaned_data))
+
+        return super().form_valid(form)

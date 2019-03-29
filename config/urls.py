@@ -63,6 +63,7 @@ urlpatterns = [
 
     path('login/', views.LoginView.as_view(), name='login'),
     path('logout/', views.LogoutView.as_view(), name='logout'),
+    path('contact/', ContactView.as_view(), name='contact'),
 
     path('update_culture_codes/', update_culture_codes, name='update_culture_codes'),
 
