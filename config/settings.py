@@ -30,9 +30,9 @@ SECRET_KEY = 'kuu98^yGGf$)ooooovjf8&uztcdn'
 DEBUG = False
 
 
-ADMINS = [('Phoebe','phoebebright310@gmail.com'),('Phoebe','phoebe@horsetech.ie'), ('System','calculator@horsetech.ie')]
+ADMINS = [('Phoebe','phoebebright310@gmail.com'),('Phoebe','phoebe@horsetech.ie'), ('Dominic','dominic@equ.la')]
 
-ALLOWED_HOSTS = ['cds.equinetech.org',]
+ALLOWED_HOSTS = ['cds.equinetech.org', 'equidata.ie', 'www.equidata.ie']
 
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
