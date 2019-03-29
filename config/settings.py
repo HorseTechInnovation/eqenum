@@ -32,7 +32,7 @@ DEBUG = False
 
 ADMINS = [('Phoebe','phoebebright310@gmail.com'),('Phoebe','phoebe@horsetech.ie'), ('System','calculator@horsetech.ie')]
 
-ALLOWED_HOSTS = ['www.dressagecalculator.com','dressagecalculator.com', 'dc.iofh.io', 'skor.ie', 'www.skor.ie']
+ALLOWED_HOSTS = ['cds.equinetech.org',]
 
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`

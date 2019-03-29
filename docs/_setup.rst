@@ -129,6 +129,10 @@ Example local settings::
         },
     }
 
+Need logs directory:
+
+    mkdir logs
+
 To populate countries and languages run::
 
     python manage.py update_countries_plus

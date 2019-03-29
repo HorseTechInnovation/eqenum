@@ -1,0 +1,39 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+django-nose = "*"
+
+[packages]
+django = "==2.0.8"
+environ = "*"
+psycopg2-binary = "*"
+docutils = "*"
+coreapi = "*"
+pendulum = "*"
+djangorestframework = "*"
+django-cors-headers = "*"
+django-countries-plus = "*"
+django-languages-plus = "*"
+django-filter = "*"
+django-nose = "*"
+django-instant-coverage = "*"
+django-post-office = "*"
+django-markupfield = "*"
+django-import-export = "*"
+markdown = "*"
+pyyaml = "*"
+ua-parser = "*"
+user-agents = "*"
+django-user-agents = "*"
+djangorestframework-yaml = "*"
+djangorestframework-csv = "*"
+django-js-error-hook = {git = "git://github.com/jojax/django-js-error-hook.git"}
+django-allauth = {git = "git://github.com/pennersr/django-allauth"}  # need fix for is_safe_url() missing 1 required positional argument: 'allowed_hosts'
+django-material = {git = "git://github.com/viewflow/django-material.git"}
+
+
+[requires]
+python_version = "3.6"
