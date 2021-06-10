@@ -7,7 +7,7 @@ verify_ssl = true
 django-nose = "*"
 
 [packages]
-django = "==2.0.8"
+django = "==2.2.24"
 environ = "*"
 psycopg2-binary = "*"
 docutils = "*"
